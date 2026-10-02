@@ -1,0 +1,185 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with authentication and role information",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Unique identifier of the user",
+          "maxLength": 128
+        },
+        "email": {
+          "type": "string",
+          "description": "User email address",
+          "maxLength": 256
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Full name or screen name",
+          "maxLength": 128
+        },
+        "role": {
+          "type": "string",
+          "description": "User role in the system",
+          "enum": ["customer", "merchant", "admin"]
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp in ISO format"
+        }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Luxury minimalist e-commerce catalog item",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique product SKU / ID",
+          "maxLength": 128
+        },
+        "title": {
+          "type": "string",
+          "description": "Product display name",
+          "maxLength": 150
+        },
+        "subtitle": {
+          "type": "string",
+          "description": "One-line aesthetic kicker",
+          "maxLength": 250
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed architectural product description",
+          "maxLength": 2000
+        },
+        "price": {
+          "type": "number",
+          "description": "Unit retail price in USD"
+        },
+        "category": {
+          "type": "string",
+          "description": "Product taxonomy category",
+          "enum": ["audio", "timepieces", "sculptures", "lighting", "accessories"]
+        },
+        "stock": {
+          "type": "number",
+          "description": "Current inventory count"
+        },
+        "rating": {
+          "type": "number",
+          "description": "Customer satisfaction score 0-5"
+        },
+        "materialFinish": {
+          "type": "string",
+          "description": "Default 3D surface material finish",
+          "enum": ["matte-obsidian", "polished-chrome", "ceramic-white", "brushed-steel"]
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "High-fidelity product image URL",
+          "maxLength": 512
+        }
+      },
+      "required": ["id", "title", "price", "category", "stock"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer purchase transaction record",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique order identifier",
+          "maxLength": 128
+        },
+        "userId": {
+          "type": "string",
+          "description": "UID of the user who placed the order",
+          "maxLength": 128
+        },
+        "customerEmail": {
+          "type": "string",
+          "description": "Email address for notifications",
+          "maxLength": 256
+        },
+        "customerName": {
+          "type": "string",
+          "description": "Full name of recipient",
+          "maxLength": 128
+        },
+        "total": {
+          "type": "number",
+          "description": "Final billed total amount"
+        },
+        "status": {
+          "type": "string",
+          "description": "Fulfillment status",
+          "enum": ["processing", "assembled", "dispatched", "delivered", "cancelled"]
+        },
+        "trackingNumber": {
+          "type": "string",
+          "description": "Carrier tracking identifier",
+          "maxLength": 64
+        },
+        "shippingAddress": {
+          "type": "string",
+          "description": "Delivery street and destination",
+          "maxLength": 512
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Order creation date"
+        }
+      },
+      "required": ["id", "userId", "customerEmail", "total", "status"]
+    },
+    "Cart": {
+      "title": "Cart",
+      "description": "Persistent active shopping cart for an authenticated user",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "User identifier owning this cart",
+          "maxLength": 128
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last modification date"
+        }
+      },
+      "required": ["userId"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/User"
+      },
+      "description": "User account profiles and permission roles"
+    },
+    "/products/{productId}": {
+      "schema": {
+        "$ref": "#/entities/Product"
+      },
+      "description": "Public retail product catalog items"
+    },
+    "/orders/{orderId}": {
+      "schema": {
+        "$ref": "#/entities/Order"
+      },
+      "description": "E-commerce order records"
+    },
+    "/carts/{userId}": {
+      "schema": {
+        "$ref": "#/entities/Cart"
+      },
+      "description": "Synchronized active cart state per user"
+    }
+  }
+}

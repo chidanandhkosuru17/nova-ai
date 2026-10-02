@@ -1,0 +1,6 @@
+{
+  "name": "Nova Cart — Luxury Black & White 3D Commerce",
+  "description": "Premium minimalist monochrome commerce platform featuring real-time 3D spatial visuals, database authentication, order analytics, and interactive product inspection.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
